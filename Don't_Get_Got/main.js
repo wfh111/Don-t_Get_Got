@@ -95,7 +95,7 @@ AM.downloadAll(function () {
 
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-    gameEngine.addEntity(new Cheetah(gameEngine, AM.getAsset("./img/runningcat.png")));
+    gameEngine.addEntity(new Guy(gameEngine, AM.getAsset("./img/Spikes.png")));
     gameEngine.addEntity(new Guy(gameEngine, AM.getAsset("./img/Crate.png")));
 
     console.log("All Done!");
