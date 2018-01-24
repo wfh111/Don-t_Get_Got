@@ -57,33 +57,51 @@ Background.prototype.draw = function () {
 Background.prototype.update = function () {
 };
 
+function Spike (game, spritesheet, lane) {
+	this.animation = new Animation(spritesheet, 0, 0, 16, 1, 1, true, 0.5);
+	this.speed = 1;
+	this.ctx = game.ctx;
+	Entity.call(this, game, 100 + (100 * lane), 0);
+};
 
-// inheritance 
-function Guy(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 154, 215, 4, 0.15, 8, true, 0.5);
-    this.speed = 100;
-    this.ctx = game.ctx;
-    Entity.call(this, game, 0, 450);
+Spike.prototype.update = function() {
+	this.y += this.game.clockTick * this.speed
+	Entity.prototype.update.call(this);
 }
 
-Guy.prototype = new Entity();
-Guy.prototype.constructor = Guy;
+Spike.prototype = new Entity();
+Spike.prototype.constructor = Spike;
 
-Guy.prototype.update = function () {
+Spike.prototype.draw = function () {
+	this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    Entity.prototype.draw.call(this);
+};
+
+// inheritance 
+function Crate(game, spritesheet, lane) {
+    this.animation = new Animation(spritesheet, 154, 215, 4, 0.15, 8, true, 0.5);
+    this.speed = 1;
+    this.ctx = game.ctx;
+    Entity.call(this, game, (100 * lane) + 100, 0);
+};
+
+Crate.prototype = new Entity();
+Crate.prototype.constructor = Crate;
+
+Crate.prototype.update = function () {
     this.x += this.game.clockTick * this.speed;
-    if (this.x > 800) this.x = -230;
     Entity.prototype.update.call(this);
 }
 
-Guy.prototype.draw = function () {
+Crate.prototype.draw = function () {
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     Entity.prototype.draw.call(this);
 }
 
 
 AM.queueDownload("./img/Crate.png");
-AM.queueDownload("./img/Spikes.jpg");
-AM.queueDownload("./img/background.jpg");
+AM.queueDownload("./img/Spikes.png");
+//AM.queueDownload("./img/background.jpg");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -93,10 +111,18 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-    gameEngine.addEntity(new Guy(gameEngine, AM.getAsset("./img/Spikes.png")));
-    gameEngine.addEntity(new Guy(gameEngine, AM.getAsset("./img/Crate.png")));
-
+//    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
+    var type = Math.floor(Math.random() * 10) + 1;
+    type %= 2;
+    var lane = Math.floor(Math.random() * 10) + 1;
+    lane %= 3;
+    switch(type) {
+    case 0:
+    	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), lane));
+    	break;
+    case 1:
+        gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), lane));
+    }
+    
     console.log("All Done!");
 });
