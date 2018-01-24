@@ -73,7 +73,6 @@ Background.prototype.draw = function () {
 Background.prototype.update = function () {
 };
 
-<<<<<<< HEAD
 function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 0, 0, 16, 1, 1, true, 0.5);
 	this.speed = 1;
@@ -84,27 +83,11 @@ function Spike (game, spritesheet, lane) {
 Spike.prototype.update = function() {
 	this.y += this.game.clockTick * this.speed
 	Entity.prototype.update.call(this);
-=======
-function MushroomDude(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 189, 230, 5, 0.10, 14, true, 1);
-    this.x = 0;
-    this.y = 0;
-    this.speed = 0;
-    this.game = game;
-    this.ctx = game.ctx;
->>>>>>> branch 'master' of https://github.com/wfh111/Don-t_Get_Got.git
-}
+};
 
-<<<<<<< HEAD
 Spike.prototype = new Entity();
 Spike.prototype.constructor = Spike;
-=======
-MushroomDude.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100);
-}
->>>>>>> branch 'master' of https://github.com/wfh111/Don-t_Get_Got.git
 
-<<<<<<< HEAD
 Spike.prototype.draw = function () {
 	this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     Entity.prototype.draw.call(this);
@@ -122,50 +105,21 @@ Crate.prototype = new Entity();
 Crate.prototype.constructor = Crate;
 
 Crate.prototype.update = function () {
-=======
-MushroomDude.prototype.update = function () {
-    if (this.animation.elapsedTime < this.animation.totalTime * 8 / 14)
-        this.x += this.game.clockTick * this.speed;
-    if (this.x > 400) this.x = 0;
-}
+	this.y += this.game.clockTick * this.speed
+	Entity.prototype.update.call(this);
+};
 
-
-// inheritance
-function Cheetah(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 512, 256, 2, 0.05, 8, true, 0.5);
-    this.speed = 350;
-    this.ctx = game.ctx;
-    Entity.call(this, game, 0, 250);
-}
-
-Cheetah.prototype = new Entity();
-Cheetah.prototype.constructor = Cheetah;
-
-Cheetah.prototype.update = function () {
->>>>>>> branch 'master' of https://github.com/wfh111/Don-t_Get_Got.git
-    this.x += this.game.clockTick * this.speed;
-    Entity.prototype.update.call(this);
-}
-
-<<<<<<< HEAD
 Crate.prototype.draw = function () {
-=======
-Cheetah.prototype.draw = function () {
->>>>>>> branch 'master' of https://github.com/wfh111/Don-t_Get_Got.git
     this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     Entity.prototype.draw.call(this);
-}
+};
 
 
-<<<<<<< HEAD
 AM.queueDownload("./img/Crate.png");
 AM.queueDownload("./img/Spikes.png");
 //AM.queueDownload("./img/background.jpg");
-=======
-AM.queueDownload("./img/mushroomdude.png");
-AM.queueDownload("./img/runningcat.png");
+
 AM.queueDownload("./img/bg3.png");
->>>>>>> branch 'master' of https://github.com/wfh111/Don-t_Get_Got.git
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -175,7 +129,6 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-<<<<<<< HEAD
 //    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
     var type = Math.floor(Math.random() * 10) + 1;
     type %= 2;
@@ -187,13 +140,7 @@ AM.downloadAll(function () {
     	break;
     case 1:
         gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), lane));
+        break;
     }
-    
-=======
-    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-    gameEngine.addEntity(new Cheetah(gameEngine, AM.getAsset("./img/runningcat.png")));
-
->>>>>>> branch 'master' of https://github.com/wfh111/Don-t_Get_Got.git
     console.log("All Done!");
 });
