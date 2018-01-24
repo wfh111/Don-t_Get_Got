@@ -1,5 +1,5 @@
 var AM = new AssetManager();
-var sheetHeight = 490;
+var sheetHeight = 360;
 
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
@@ -74,19 +74,19 @@ Background.prototype.update = function () {
 };
 
 function Spike (game, spritesheet, lane) {
-	this.animation = new Animation(spritesheet, 0, 0, 16, 1, 1, true, 0.5);
-	this.speed = 1;
+	this.animation = new Animation(spritesheet, 142, 163, 142, 1, 1, true, 0.4);
+	this.speed = 60;
 	this.ctx = game.ctx;
-	Entity.call(this, game, 100 + (100 * lane), 0);
+	Entity.call(this, game, 75 + (100 * lane), 0);
 };
+
+Spike.prototype = new Entity();
+Spike.prototype.constructor = Spike;
 
 Spike.prototype.update = function() {
 	this.y += this.game.clockTick * this.speed
 	Entity.prototype.update.call(this);
 };
-
-Spike.prototype = new Entity();
-Spike.prototype.constructor = Spike;
 
 Spike.prototype.draw = function () {
 	this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
@@ -95,10 +95,10 @@ Spike.prototype.draw = function () {
 
 // inheritance 
 function Crate(game, spritesheet, lane) {
-    this.animation = new Animation(spritesheet, 154, 215, 4, 0.15, 8, true, 0.5);
-    this.speed = 1;
+    this.animation = new Animation(spritesheet, 512, 512, 512, 1, 1, true, 0.1);
+    this.speed = 60;
     this.ctx = game.ctx;
-    Entity.call(this, game, (100 * lane) + 100, 0);
+    Entity.call(this, game, (100 * lane) + 75, 0);
 };
 
 Crate.prototype = new Entity();
@@ -117,8 +117,6 @@ Crate.prototype.draw = function () {
 
 AM.queueDownload("./img/Crate.png");
 AM.queueDownload("./img/Spikes.png");
-//AM.queueDownload("./img/background.jpg");
-
 AM.queueDownload("./img/bg3.png");
 
 AM.downloadAll(function () {
@@ -129,7 +127,8 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
 
-//    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/background.jpg")));
+    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
+    while()
     var type = Math.floor(Math.random() * 10) + 1;
     type %= 2;
     var lane = Math.floor(Math.random() * 10) + 1;
