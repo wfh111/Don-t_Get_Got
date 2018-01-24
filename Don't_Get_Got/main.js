@@ -77,7 +77,7 @@ function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 142, 163, 142, 1, 1, true, 0.4);
 	this.speed = 60;
 	this.ctx = game.ctx;
-	Entity.call(this, game, 75 + (100 * lane), 0);
+	Entity.call(this, game, 70 + (100 * lane), 0);
 };
 
 Spike.prototype = new Entity();
@@ -128,7 +128,6 @@ AM.downloadAll(function () {
     gameEngine.start();
 
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    while()
     var type = Math.floor(Math.random() * 10) + 1;
     type %= 2;
     var lane = Math.floor(Math.random() * 10) + 1;
