@@ -1,7 +1,6 @@
 var AM = new AssetManager();
 var sheetHeight = 490;
-var myScore;
-
+var gameScore = 0;
 
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
@@ -43,25 +42,6 @@ Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
 }
 
-//Score to display on canvas
-/*function scoreChange(width, height, color, x, y, type) {
-	this.type = type;
-	this.width = width;
-	this.height = height;
-	this.speedX = 0;
-	this.speedY = 0; 
-	this.x = x;
-	this.y = y; 
-	this.updateScore = function() {
-	ctx = myGameArea.context;
-	ctx.font = this.width + " " + this.height;
-	ctx.fillStyle = color;
-	ctx.fillText(this.text, this.x, this.y);
-}*/
-
-
-
-
 // no inheritance
 function Background(game, spritesheet) {
     this.x = 0;
@@ -87,13 +67,29 @@ Background.prototype.draw = function () {
       // If the image scrolled off the screen, reset
       if (this.y >= sheetHeight)
         this.y = 0;
-/*      gameEngine.frameNo += 1;
-      myScore.text = "SCORE: " + gameEngine.frameNo;
-      myScore.updateScore();*/
 };
 
 Background.prototype.update = function () {
 };
+
+/*function Score(game, score, color, x, y) {
+	this.font1 = font1;
+	this.font2 = font2;
+	this.color = color;
+	this.x = x;
+	this.y = y;
+	this.ctx = game.ctx;
+	this.score = score;
+}
+
+Score.prototype = new Entity();
+Score.prototype.update = function () {
+	this.gameScore += 1;
+	this.ctx.font = "30px Arial";
+	this.ctx.fillStyle = "red";
+	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
+};*/
+
 
 function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 142, 163, 142, 1, 1, true, 0.4);
@@ -188,10 +184,9 @@ AM.downloadAll(function () {
 
     var gameEngine = new GameEngine();
     gameEngine.init(ctx);
-    //intiate score
-    //myScore = new scoreChange("30px", "Consolas", "black", 280, 40, "text");
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
     var type = Math.floor(Math.random() * 100) + 1;
     type %= 4;
     var lane = Math.floor(Math.random() * 10) + 1;
