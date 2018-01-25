@@ -154,7 +154,7 @@ Score.prototype = new Entity();
 Score.prototype.update = function () {
 	this.gameScore += 1;
 	this.ctx.font = "30px Arial";
-	this.ctx.fillStyle = "Red";
+	this.ctx.fillStyle = "#000000";
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 };*/
 
@@ -335,7 +335,7 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "#000000", 390, 10));*/
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
     var type = Math.floor(Math.random() * 100) + 1;
     type %= 4;
