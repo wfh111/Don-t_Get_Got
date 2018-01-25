@@ -1,5 +1,11 @@
 var AM = new AssetManager();
 var sheetHeight = 490;
+var right_lane = 100;
+var left_lane = -100;
+var middle_lane = 0;
+var lane_size = 100;
+var left_change = 0;
+var right_change = 0;
 var gameScore = 0;
 
 //function Animation(spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, scale) {
