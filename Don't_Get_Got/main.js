@@ -1,5 +1,5 @@
 var AM = new AssetManager();
-var sheetHeight = 360;
+var sheetHeight = 490;
 
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
