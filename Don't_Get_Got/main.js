@@ -188,20 +188,37 @@ MushroomDude.prototype.update = function () {
     if (this.game.rightButton) {
       this.Right = true;
     } else {
-      
-      this.Right = false;
+      if (this.x >= right_lane || this.Left) {
+        right_change = 0;
+        this.Right = false;
+      }
     }
     if (this.Right) {
-      this.x += this.game.clockTick * this.speed;
+      if (this.x < right_lane && right_change < lane_size) {
+        this.x += this.game.clockTick * this.speed;
+        right_change += this.game.clockTick * this.speed;
+      } else {
+        right_change = 0;
+        this.Right = false;
+      }
     }
 
     if (this.game.leftButton) {
       this.Left = true;
     } else {
-      this.Left = false;
+      if (this.x <= left_lane || this.Right) {
+        left_change = 0;
+        this.Left = false;
+      }
     }
     if (this.Left) {
-      this.x -= this.game.clockTick * this.speed;
+      if (this.x > left_lane && left_change < lane_size) {
+        this.x -= this.game.clockTick * this.speed;
+        left_change += this.game.clockTick * this.speed;
+      } else {
+        left_change = 0;
+        this.Left = false;
+      }
     }
 
     if (this.game.upButton) {
