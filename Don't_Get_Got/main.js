@@ -1,12 +1,19 @@
 var AM = new AssetManager();
 var sheetHeight = 490;
+var right_lane = 100;
+var left_lane = -100;
+var middle_lane = 0;
+var lane_size = 100;
+var left_change = 0;
+var right_change = 0;
 var gameScore = 0;
 
-//function Animation(spriteSheet, frameWidth, frameHeight, frameDuration, frames, loop, scale) {
+//function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
 //    this.spriteSheet = spriteSheet;
 //    this.frameWidth = frameWidth;
 //    this.frameDuration = frameDuration;
 //    this.frameHeight = frameHeight;
+//    this.sheetWidth = sheetWidth;
 //    this.frames = frames;
 //    this.totalTime = frameDuration * frames;
 //    this.elapsedTime = 0;
@@ -40,6 +47,7 @@ var gameScore = 0;
 //Animation.prototype.isDone = function () {
 //    return (this.elapsedTime >= this.totalTime);
 //}
+
 function Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse) {
     this.spriteSheet = spriteSheet;
     this.startX = startX;
@@ -156,8 +164,9 @@ Score.prototype.update = function () {
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 };*/
 
+//original animation spritesheet, 189, 230, 5, 0.10, 14, true,1
 function MushroomDude(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 0, 0, 189, 230, 5, 0.10, 14, true);
+    this.animation = new Animation(spritesheet, 0, 0, 189, 230, 0.10, 14, true);
     this.x = 0;
     this.y = 0;
     this.speed = 200;
@@ -169,7 +178,7 @@ function MushroomDude(game, spritesheet) {
 }
 
 MushroomDude.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100, 1);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100, 0.5);
 }
 
 MushroomDude.prototype.update = function () {
@@ -180,20 +189,37 @@ MushroomDude.prototype.update = function () {
     if (this.game.rightButton) {
       this.Right = true;
     } else {
-      
-      this.Right = false;
+      if (this.x >= right_lane || this.Left) {
+        right_change = 0;
+        this.Right = false;
+      }
     }
     if (this.Right) {
-      this.x += this.game.clockTick * this.speed;
+      if (this.x < right_lane && right_change < lane_size) {
+        this.x += this.game.clockTick * this.speed;
+        right_change += this.game.clockTick * this.speed;
+      } else {
+        right_change = 0;
+        this.Right = false;
+      }
     }
 
     if (this.game.leftButton) {
       this.Left = true;
     } else {
-      this.Left = false;
+      if (this.x <= left_lane || this.Right) {
+        left_change = 0;
+        this.Left = false;
+      }
     }
     if (this.Left) {
-      this.x -= this.game.clockTick * this.speed;
+      if (this.x > left_lane && left_change < lane_size) {
+        this.x -= this.game.clockTick * this.speed;
+        left_change += this.game.clockTick * this.speed;
+      } else {
+        left_change = 0;
+        this.Left = false;
+      }
     }
 
     if (this.game.upButton) {
@@ -206,6 +232,7 @@ MushroomDude.prototype.update = function () {
     }
 }
 
+//0,512
 function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 0, 512, 142, 163, 810, 1, 1, true);
 	this.speed = 60;
@@ -228,10 +255,10 @@ Spike.prototype.update = function() {
 };
 
 Spike.prototype.draw = function () {
-	this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.4);
+	this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.4);//0.4
     Entity.prototype.draw.call(this);
 };
-
+//0,0
 // inheritance
 function Crate(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 0, 0, 512, 512, 810, 1, 1, true);
@@ -255,10 +282,10 @@ Crate.prototype.update = function () {
 };
 
 Crate.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.1);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.1);//.1
     Entity.prototype.draw.call(this);
 };
-
+//0, 1300
 function Oil(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 0, 1300, 776, 484, 810, 1, 1, true);
     this.speed = 60;
@@ -281,10 +308,10 @@ Oil.prototype.update = function () {
 };
 
 Oil.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.2);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.2);//.2
     Entity.prototype.draw.call(this);
 };
-
+//0, 675
 function Branch(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 0, 675, 800, 600, 810, 1, 1, true);
     this.speed = 60;
@@ -308,7 +335,7 @@ Branch.prototype.update = function () {
 };
 
 Branch.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.1);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0.1); //0.1
     Entity.prototype.draw.call(this);
 };
 
@@ -355,6 +382,32 @@ AM.downloadAll(function () {
     	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
     	break;
     }
+    gameEngine.start();
+    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
+    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
+
+//    var type = Math.floor(Math.random() * 100) + 1;
+//    type %= 4;
+////    var type = 0;
+//    var lane = Math.floor(Math.random() * 10) + 1;
+//    lane %= 3;
+////    var lane = 2;
+//    switch(type) {
+//    case 0: //Spikes
+    	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), 1));
+//    	break;
+//    case 1: //Crate
+        gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), 2));
+//        break;
+//    case 2: //Oil
+    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/newOil.png"), 0));
+//    	break;
+//    case 3: //Branch
+//    	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
+//    	break;
+//    }
 //    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
+    
     console.log("All Done!");
 });
