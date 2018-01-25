@@ -2,6 +2,7 @@ var AM = new AssetManager();
 var sheetHeight = 490;
 var myScore;
 
+
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
     this.frameWidth = frameWidth;
