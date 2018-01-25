@@ -49,9 +49,9 @@ Animation.prototype.isDone = function () {
 	this.width = width;
 	this.height = height;
 	this.speedX = 0;
-	this.speedY = 0; 
+	this.speedY = 0;
 	this.x = x;
-	this.y = y; 
+	this.y = y;
 	this.updateScore = function() {
 	ctx = myGameArea.context;
 	ctx.font = this.width + " " + this.height;
@@ -95,6 +95,56 @@ Background.prototype.draw = function () {
 Background.prototype.update = function () {
 };
 
+function MushroomDude(game, spritesheet) {
+    this.animation = new Animation(spritesheet, 189, 230, 5, 0.10, 14, true, 1);
+    this.x = 0;
+    this.y = 0;
+    this.speed = 200;
+    this.game = game;
+    this.Right = false;
+    this.Left = false;
+    this.Up = false;
+    this.ctx = game.ctx;
+}
+
+MushroomDude.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100);
+}
+
+MushroomDude.prototype.update = function () {
+    //if (this.animation.elapsedTime < this.animation.totalTime * 8 / 14)
+    //this.x += this.game.clockTick * this.speed;
+    //if (this.x > 400) this.x = 0;
+
+    if (this.game.rightButton) {
+      this.Right = true;
+    } else {
+      
+      this.Right = false;
+    }
+    if (this.Right) {
+      this.x += this.game.clockTick * this.speed;
+    }
+
+    if (this.game.leftButton) {
+      this.Left = true;
+    } else {
+      this.Left = false;
+    }
+    if (this.Left) {
+      this.x -= this.game.clockTick * this.speed;
+    }
+
+    if (this.game.upButton) {
+      this.Up = true;
+    } else {
+      this.Up = false;
+    }
+    if (this.Up) {
+      this.y -= this.game.clockTick * this.speed;
+    }
+}
+
 function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 142, 163, 142, 1, 1, true, 0.4);
 	this.speed = 60;
@@ -121,7 +171,7 @@ Spike.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 };
 
-// inheritance 
+// inheritance
 function Crate(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 512, 512, 512, 1, 1, true, 0.1);
     this.speed = 60;
@@ -185,7 +235,7 @@ function Branch(game, spritesheet, lane) {
     } else {
     	Entity.call(this, game, 240, 0);
     }
-    
+
 };
 
 Branch.prototype = new Entity();
@@ -206,6 +256,7 @@ AM.queueDownload("./img/Spikes.png");
 AM.queueDownload("./img/bg3.png");
 AM.queueDownload("./img/newOil.png");
 AM.queueDownload("./img/branch.png");
+AM.queueDownload("./img/mushroomdude.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -217,6 +268,7 @@ AM.downloadAll(function () {
     //myScore = new scoreChange("30px", "Consolas", "black", 280, 40, "text");
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
+    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
     var type = Math.floor(Math.random() * 100) + 1;
     type %= 4;
 //    var type = 0;
