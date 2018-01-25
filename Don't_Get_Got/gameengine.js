@@ -38,6 +38,45 @@ GameEngine.prototype.start = function () {
 GameEngine.prototype.startInput = function () {
     console.log('Starting input');
 
+    this.ctx.canvas.addEventListener("keydown", function (e) {
+        //
+        if (e.keyCode == 39 || e.keyCode == 68) {
+          console.log("right");
+          that.rightButton = true;
+        }
+        if (e.keyCode == 37 || e.keyCode == 65) {
+          console.log("left");
+          that.leftButton = true;
+        }
+        if (e.keyCode == 38 || e.keyCode == 87) {
+          console.log("up");
+          that.upButton = true;
+        }
+        //        console.log(e);
+
+        e.preventDefault();
+    }, false);
+
+    this.ctx.canvas.addEventListener("keyup", function (e) {
+        console.log(e);
+
+        if (e.keyCode == 39 || e.keyCode == 68) {
+          console.log("right");
+          that.rightButton = false;
+        }
+        if (e.keyCode == 37 || e.keyCode == 65) {
+          console.log("left");
+          that.leftButton = false;
+        }
+        if (e.keyCode == 38 || e.keyCode == 87) {
+          console.log("up");
+          that.upButton = false;
+        }
+        console.log("Key Up Event - Char " + e.code + " Code " + e.keyCode);
+    }, false);
+
+    console.log('Input started');
+
     var getXandY = function (e) {
         var x = e.clientX - that.ctx.canvas.getBoundingClientRect().left;
         var y = e.clientY - that.ctx.canvas.getBoundingClientRect().top;
@@ -90,6 +129,14 @@ GameEngine.prototype.startInput = function () {
         console.log("Key Pressed Event - Char " + e.charCode + " Code " + e.keyCode);
     }, false);
 
+    this.ctx.canvas.addEventListener("keypress", function (e) {
+        if (e.code === "ArrowLeft") that.Left = true;
+        that.chars[e.code] = true;
+        console.log(e);
+        console.log("ey bruv");
+        console.log("Key Pressed Event - Char " + e.charCode + " Code " + e.keyCode);
+    }, false);
+
     this.ctx.canvas.addEventListener("keyup", function (e) {
         console.log(e);
         console.log("Key Up Event - Char " + e.code + " Code " + e.keyCode);
@@ -126,6 +173,9 @@ GameEngine.prototype.loop = function () {
     this.clockTick = this.timer.tick();
     this.update();
     this.draw();
+    this.rightButton = null;
+    this.leftButton = null;
+    this.upButton = null;
 }
 
 function Timer() {
