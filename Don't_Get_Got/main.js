@@ -197,16 +197,16 @@ AM.downloadAll(function () {
     var lane = Math.floor(Math.random() * 10) + 1;
     lane %= 3;
     switch(type) {
-    case 0:
+    case 0: //Spikes
     	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), lane));
     	break;
-    case 1:
+    case 1: //Crate
         gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), lane));
         break;
-    case 2:
+    case 2: //Oil
     	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/oil.png"), lane));
     	break;
-    case 3:
+    case 3: //Branch
     	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
     	break;
     }
