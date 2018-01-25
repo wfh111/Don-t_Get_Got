@@ -1,7 +1,12 @@
 var AM = new AssetManager();
 var sheetHeight = 490;
-var myScore;
-
+var right_lane = 100;
+var left_lane = -100;
+var middle_lane = 0;
+var lane_size = 100;
+var left_change = 0;
+var right_change = 0;
+var gameScore = 0;
 
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
@@ -42,6 +47,7 @@ Animation.prototype.currentFrame = function () {
 Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
 }
+
 //function Animation(spriteSheet, startX, startY, frameWidth, frameHeight, frameDuration, frames, loop, reverse) {
 //    this.spriteSheet = spriteSheet;
 //    this.startX = startX;
@@ -95,6 +101,7 @@ Animation.prototype.isDone = function () {
 //Animation.prototype.isDone = function () {
 //    return (this.elapsedTime >= this.totalTime);
 //}
+
 //Score to display on canvas
 /*function scoreChange(width, height, color, x, y, type) {
 	this.type = type;
@@ -110,9 +117,6 @@ Animation.prototype.isDone = function () {
 	ctx.fillStyle = color;
 	ctx.fillText(this.text, this.x, this.y);
 }*/
-
-
-
 
 // no inheritance
 function Background(game, spritesheet) {
@@ -139,13 +143,28 @@ Background.prototype.draw = function () {
       // If the image scrolled off the screen, reset
       if (this.y >= sheetHeight)
         this.y = 0;
-/*      gameEngine.frameNo += 1;
-      myScore.text = "SCORE: " + gameEngine.frameNo;
-      myScore.updateScore();*/
 };
 
 Background.prototype.update = function () {
 };
+
+/*function Score(game, score, color, x, y) {
+	this.font1 = font1;
+	this.font2 = font2;
+	this.color = color;
+	this.x = x;
+	this.y = y;
+	this.ctx = game.ctx;
+	this.score = score;
+}
+
+Score.prototype = new Entity();
+Score.prototype.update = function () {
+	this.gameScore += 1;
+	this.ctx.font = "30px Arial";
+	this.ctx.fillStyle = "Red";
+	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
+};*/
 
 function MushroomDude(game, spritesheet) {
     this.animation = new Animation(spritesheet, 189, 230, 5, 0.10, 14, true,1);
@@ -171,20 +190,37 @@ MushroomDude.prototype.update = function () {
     if (this.game.rightButton) {
       this.Right = true;
     } else {
-      
-      this.Right = false;
+      if (this.x >= right_lane || this.Left) {
+        right_change = 0;
+        this.Right = false;
+      }
     }
     if (this.Right) {
-      this.x += this.game.clockTick * this.speed;
+      if (this.x < right_lane && right_change < lane_size) {
+        this.x += this.game.clockTick * this.speed;
+        right_change += this.game.clockTick * this.speed;
+      } else {
+        right_change = 0;
+        this.Right = false;
+      }
     }
 
     if (this.game.leftButton) {
       this.Left = true;
     } else {
-      this.Left = false;
+      if (this.x <= left_lane || this.Right) {
+        left_change = 0;
+        this.Left = false;
+      }
     }
     if (this.Left) {
-      this.x -= this.game.clockTick * this.speed;
+      if (this.x > left_lane && left_change < lane_size) {
+        this.x -= this.game.clockTick * this.speed;
+        left_change += this.game.clockTick * this.speed;
+      } else {
+        left_change = 0;
+        this.Left = false;
+      }
     }
 
     if (this.game.upButton) {
@@ -323,11 +359,11 @@ AM.downloadAll(function () {
 
     var gameEngine = new GameEngine();
     gameEngine.init(ctx);
-    //intiate score
-    //myScore = new scoreChange("30px", "Consolas", "black", 280, 40, "text");
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
+
 //    var type = Math.floor(Math.random() * 100) + 1;
 //    type %= 4;
 ////    var type = 0;
@@ -349,5 +385,6 @@ AM.downloadAll(function () {
 //    	break;
 //    }
 //    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
+    
     console.log("All Done!");
 });
