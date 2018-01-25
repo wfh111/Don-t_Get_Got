@@ -1,5 +1,6 @@
 var AM = new AssetManager();
-var sheetHeight = 360;
+var sheetHeight = 490;
+var myScore;
 
 function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
@@ -41,6 +42,25 @@ Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
 }
 
+//Score to display on canvas
+/*function scoreChange(width, height, color, x, y, type) {
+	this.type = type;
+	this.width = width;
+	this.height = height;
+	this.speedX = 0;
+	this.speedY = 0; 
+	this.x = x;
+	this.y = y; 
+	this.updateScore = function() {
+	ctx = myGameArea.context;
+	ctx.font = this.width + " " + this.height;
+	ctx.fillStyle = color;
+	ctx.fillText(this.text, this.x, this.y);
+}*/
+
+
+
+
 // no inheritance
 function Background(game, spritesheet) {
     this.x = 0;
@@ -49,8 +69,6 @@ function Background(game, spritesheet) {
     this.spritesheet = spritesheet;
     this.game = game;
     this.ctx = game.ctx;
-
-
 };
 
 Background.prototype.draw = function () {
@@ -68,6 +86,9 @@ Background.prototype.draw = function () {
       // If the image scrolled off the screen, reset
       if (this.y >= sheetHeight)
         this.y = 0;
+/*      gameEngine.frameNo += 1;
+      myScore.text = "SCORE: " + gameEngine.frameNo;
+      myScore.updateScore();*/
 };
 
 Background.prototype.update = function () {
@@ -77,7 +98,7 @@ function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 142, 163, 142, 1, 1, true, 0.4);
 	this.speed = 60;
 	this.ctx = game.ctx;
-	Entity.call(this, game, 70 + (100 * lane), 0);
+	Entity.call(this, game, 75 + (100 * lane), 0);
 };
 
 Spike.prototype = new Entity();
@@ -125,8 +146,9 @@ AM.downloadAll(function () {
 
     var gameEngine = new GameEngine();
     gameEngine.init(ctx);
+    //intiate score
+    myScore = new scoreChange("30px", "Consolas", "black", 280, 40, "text");
     gameEngine.start();
-
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
     var type = Math.floor(Math.random() * 10) + 1;
     type %= 2;
