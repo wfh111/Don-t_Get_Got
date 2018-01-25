@@ -114,10 +114,51 @@ Crate.prototype.draw = function () {
     Entity.prototype.draw.call(this);
 };
 
+function Oil(game, spritesheet, lane) {
+    this.animation = new Animation(spritesheet, 776, 484, 776, 1, 1, true, 0.2);
+    this.speed = 60;
+    this.ctx = game.ctx;
+    Entity.call(this, game, (100 * lane) + 25, 0);
+};
+
+Oil.prototype = new Entity();
+Oil.prototype.constructor = Oil;
+
+Oil.prototype.update = function () {
+	this.y += this.game.clockTick * this.speed
+	Entity.prototype.update.call(this);
+};
+
+Oil.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    Entity.prototype.draw.call(this);
+};
+
+function Branch(game, spritesheet, lane) {
+    this.animation = new Animation(spritesheet, 800, 600, 800, 1, 1, true, 0.1);
+    this.speed = 60;
+    this.ctx = game.ctx;
+    Entity.call(this, game, (100 * lane) + 65, 0);
+};
+
+Branch.prototype = new Entity();
+Branch.prototype.constructor = Branch;
+
+Branch.prototype.update = function () {
+	this.y += this.game.clockTick * this.speed
+	Entity.prototype.update.call(this);
+};
+
+Branch.prototype.draw = function () {
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    Entity.prototype.draw.call(this);
+};
 
 AM.queueDownload("./img/Crate.png");
 AM.queueDownload("./img/Spikes.png");
 AM.queueDownload("./img/bg3.png");
+AM.queueDownload("./img/oil.png");
+AM.queueDownload("./img/branch.png");
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
@@ -128,8 +169,8 @@ AM.downloadAll(function () {
     gameEngine.start();
 
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    var type = Math.floor(Math.random() * 10) + 1;
-    type %= 2;
+    var type = Math.floor(Math.random() * 100) + 1;
+    type %= 4;
     var lane = Math.floor(Math.random() * 10) + 1;
     lane %= 3;
     switch(type) {
@@ -139,6 +180,12 @@ AM.downloadAll(function () {
     case 1:
         gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), lane));
         break;
+    case 2:
+    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/oil.png"), lane));
+    	break;
+    case 3:
+    	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
+    	break;
     }
     console.log("All Done!");
 });
