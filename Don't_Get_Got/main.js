@@ -99,7 +99,13 @@ function Spike (game, spritesheet, lane) {
 	this.animation = new Animation(spritesheet, 142, 163, 142, 1, 1, true, 0.4);
 	this.speed = 60;
 	this.ctx = game.ctx;
-	Entity.call(this, game, 75 + (100 * lane), 0);
+	if (lane === 0) {
+    	Entity.call(this, game, 85, 0);
+    } else if (lane === 1) {
+    	Entity.call(this, game, 173, 0);
+    } else {
+    	Entity.call(this, game, 260, 0);
+    }
 };
 
 Spike.prototype = new Entity();
@@ -120,7 +126,13 @@ function Crate(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 512, 512, 512, 1, 1, true, 0.1);
     this.speed = 60;
     this.ctx = game.ctx;
-    Entity.call(this, game, (100 * lane) + 75, 0);
+    if (lane === 0) {
+    	Entity.call(this, game, 87, 0);
+    } else if (lane === 1) {
+    	Entity.call(this, game, 175, 0);
+    } else {
+    	Entity.call(this, game, 260, 0);
+    }
 };
 
 Crate.prototype = new Entity();
@@ -140,7 +152,13 @@ function Oil(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 776, 484, 776, 1, 1, true, 0.2);
     this.speed = 60;
     this.ctx = game.ctx;
-    Entity.call(this, game, (100 * lane) + 25, 0);
+    if (lane === 0) {
+    	Entity.call(this, game, 40, 0);
+    } else if (lane === 1) {
+    	Entity.call(this, game, 128, 0);
+    } else {
+    	Entity.call(this, game, 215, 0);
+    }
 };
 
 Oil.prototype = new Entity();
@@ -160,7 +178,14 @@ function Branch(game, spritesheet, lane) {
     this.animation = new Animation(spritesheet, 800, 600, 800, 1, 1, true, 0.1);
     this.speed = 60;
     this.ctx = game.ctx;
-    Entity.call(this, game, (100 * lane) + 65, 0);
+    if (lane === 0) {
+    	Entity.call(this, game, 70, 0);
+    } else if (lane === 1) {
+    	Entity.call(this, game, 160, 0);
+    } else {
+    	Entity.call(this, game, 240, 0);
+    }
+    
 };
 
 Branch.prototype = new Entity();
@@ -194,8 +219,10 @@ AM.downloadAll(function () {
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
     var type = Math.floor(Math.random() * 100) + 1;
     type %= 4;
+//    var type = 0;
     var lane = Math.floor(Math.random() * 10) + 1;
     lane %= 3;
+//    var lane = 2;
     switch(type) {
     case 0: //Spikes
     	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), lane));
