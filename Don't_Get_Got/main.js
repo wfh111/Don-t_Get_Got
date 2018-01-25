@@ -154,7 +154,7 @@ Score.prototype = new Entity();
 Score.prototype.update = function () {
 	this.gameScore += 1;
 	this.ctx.font = "30px Arial";
-	this.ctx.fillStyle = "red";
+	this.ctx.fillStyle = "Red";
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 };*/
 
