@@ -147,7 +147,7 @@ Background.prototype.update = function () {
 };
 
 function MushroomDude(game, spritesheet) {
-    this.animation = new Animation(spritesheet, 0, 0, 189, 230, 5, 0.10, 14, true, 1);
+    this.animation = new Animation(spritesheet, 0, 0, 189, 230, 5, 0.10, 14, true);
     this.x = 0;
     this.y = 0;
     this.speed = 200;
@@ -159,7 +159,7 @@ function MushroomDude(game, spritesheet) {
 }
 
 MushroomDude.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100);
+    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100, 1);
 }
 
 MushroomDude.prototype.update = function () {
