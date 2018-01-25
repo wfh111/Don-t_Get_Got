@@ -141,8 +141,6 @@ Background.prototype.update = function () {
 };
 
 /*function Score(game, score, color, x, y) {
-	this.font1 = font1;
-	this.font2 = font2;
 	this.color = color;
 	this.x = x;
 	this.y = y;
