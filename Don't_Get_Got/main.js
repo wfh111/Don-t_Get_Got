@@ -204,7 +204,7 @@ AM.downloadAll(function () {
         gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), lane));
         break;
     case 2: //Oil
-    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/oil.png"), lane));
+    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/newOil.png"), lane));
     	break;
     case 3: //Branch
     	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
