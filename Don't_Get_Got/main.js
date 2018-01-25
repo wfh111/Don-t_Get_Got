@@ -179,7 +179,7 @@ Branch.prototype.draw = function () {
 AM.queueDownload("./img/Crate.png");
 AM.queueDownload("./img/Spikes.png");
 AM.queueDownload("./img/bg3.png");
-AM.queueDownload("./img/oil.png");
+AM.queueDownload("./img/newOil.png");
 AM.queueDownload("./img/branch.png");
 
 AM.downloadAll(function () {
