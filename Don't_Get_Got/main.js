@@ -148,7 +148,7 @@ AM.downloadAll(function () {
     var gameEngine = new GameEngine();
     gameEngine.init(ctx);
     //intiate score
-    myScore = new scoreChange("30px", "Consolas", "black", 280, 40, "text");
+    //myScore = new scoreChange("30px", "Consolas", "black", 280, 40, "text");
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
     var type = Math.floor(Math.random() * 10) + 1;
