@@ -403,7 +403,6 @@ AM.downloadAll(function () {
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
     /*gameEngine.addEntity(new Score(gameEngine, gameScore, "#000000", 390, 10));*/
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
     /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
     gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
