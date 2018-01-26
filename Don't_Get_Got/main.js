@@ -369,10 +369,10 @@ AM.downloadAll(function () {
     var gameEngine = new GameEngine();
     gameEngine.init(ctx);
     gameEngine.start();
-    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./Don't_Get_Got/img/bg3.png")));
+    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
     gameEngine.addEntity(new Score(gameEngine, gameScore, "#FFFFFF", 280, 480));
-    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./Don't_Get_Got/img/obstacles.png")));
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./Don't_Get_Got/img/mushroomdude.png")));
+    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")));
+    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
 
     console.log("All Done!");
 });
