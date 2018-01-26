@@ -102,22 +102,6 @@ Animation.prototype.isDone = function () {
     return (this.elapsedTime >= this.totalTime);
 }
 
-//Score to display on canvas
-/*function scoreChange(width, height, color, x, y, type) {
-	this.type = type;
-	this.width = width;
-	this.height = height;
-	this.speedX = 0;
-	this.speedY = 0;
-	this.x = x;
-	this.y = y;
-	this.updateScore = function() {
-	ctx = myGameArea.context;
-	ctx.font = this.width + " " + this.height;
-	ctx.fillStyle = color;
-	ctx.fillText(this.text, this.x, this.y);
-}*/
-
 // no inheritance
 function Background(game, spritesheet) {
     this.x = 0;
@@ -148,21 +132,28 @@ Background.prototype.draw = function () {
 Background.prototype.update = function () {
 };
 
-/*function Score(game, score, color, x, y) {
+function Score(game, score, color, x, y) {
 	this.color = color;
 	this.x = x;
 	this.y = y;
 	this.ctx = game.ctx;
 	this.score = score;
+	this.ctx.font = "10px Arial";
+	this.ctx.fillStyle = color;
+	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
+	Entity.call(this, game, x, y);
 }
 
-Score.prototype = new Entity();
-Score.prototype.update = function () {
-	this.gameScore += 1;
-	this.ctx.font = "30px Arial";
-	this.ctx.fillStyle = "#000000";
+//Score.prototype = new Entity();
+Score.prototype.constructor = Score;
+Score.prototype.update = function() {
+	this.score += 1;
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
-};*/
+	//Entity.prototype.update.call(this);
+};
+Score.prototype.draw = function() {
+	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
+};
 
 //original animation spritesheet, 189, 230, 5, 0.10, 14, true,1
 function MushroomDude(game, spritesheet) {
@@ -178,7 +169,7 @@ function MushroomDude(game, spritesheet) {
 }
 
 MushroomDude.prototype.draw = function () {
-    this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100, 0.5);
+	this.animation.drawFrame(this.game.clockTick, this.ctx, this.x + 150, this.y + 100, 0.5);
 }
 
 MushroomDude.prototype.update = function () {
@@ -360,7 +351,7 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "#000000", 390, 10));*/
+    gameEngine.addEntity(new Score(gameEngine, gameScore, "#FF0000", 325, 10));
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
     var type = Math.floor(Math.random() * 100) + 1;
     type %= 4;
@@ -382,10 +373,9 @@ AM.downloadAll(function () {
     	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
     	break;
     }
-    gameEngine.start();
+/*    gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
+    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));*/
 
 //    var type = Math.floor(Math.random() * 100) + 1;
 //    type %= 4;
