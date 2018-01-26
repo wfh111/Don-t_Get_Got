@@ -225,7 +225,7 @@ MushroomDude.prototype.update = function () {
 
 //0,512
 function Spike (game, spritesheet, lane) {
-	this.animation = new Animation(spritesheet, 0, 512, 142, 163, 810, 1, 1, true);
+	this.animation = new Animation(spritesheet, 0, 520, 142, 163, 810, 1, 1, true);
 	this.speed = 60;
 	this.ctx = game.ctx;
 	if (lane === 0) {
@@ -278,7 +278,7 @@ Crate.prototype.draw = function () {
 };
 //0, 1300
 function Oil(game, spritesheet, lane) {
-    this.animation = new Animation(spritesheet, 0, 1300, 776, 484, 810, 1, 1, true);
+    this.animation = new Animation(spritesheet, 0, 1450, 776, 450, 810, 1, 1, true);
     this.speed = 60;
     this.ctx = game.ctx;
     if (lane === 0) {
@@ -331,16 +331,58 @@ Branch.prototype.draw = function () {
 };
 
 function Obstacle_Spawner(game, spritesheet) {
-	var obstacles = [];
-	
+	this.obstacles = [];
+	this.game = game;
+	this.spritesheet = spritesheet;
+	this.counter = 0;
 };
 
-AM.queueDownload("./img/Crate.png");
-AM.queueDownload("./img/Spikes.png");
+Obstacle_Spawner.prototype = new Entity();
+Obstacle_Spawner.prototype.constructor = Obstacle_Spawner;
+
+Obstacle_Spawner.prototype.update = function () {
+	if(this.counter % 250 === 0){
+		var type = Math.floor(Math.random() * 100) + 1;
+		  type %= 4;
+		//  var type = 0;
+		  var lane = Math.floor(Math.random() * 10) + 1;
+		  lane %= 3;
+		//  var lane = 2;
+		  switch(type) {
+		  case 0: //Spikes
+		  	this.obstacles.push(new Spike(this.game, this.spritesheet, lane));
+		  	break;
+		  case 1: //Crate
+		      this.obstacles.push(new Crate(this.game, this.spritesheet, lane));
+		      break;
+		  case 2: //Oil
+		  	this.obstacles.push(new Oil(this.game, this.spritesheet, lane));
+		  	break;
+		  case 3: //Branch
+		  	this.obstacles.push(new Branch(this.game, this.spritesheet, lane));
+		  	break;
+		  }
+	}
+	var numObstacle = this.obstacles.length;
+	for(i = 0; i < numObstacle; i++) {
+		this.obstacles[i].update();
+	}
+	this.counter++;
+};
+
+Obstacle_Spawner.prototype.draw = function () {
+	var numObstacle = this.obstacles.length;
+	for(i = 0; i < numObstacle; i++) {
+		this.obstacles[i].draw();
+	}
+};
+
+//AM.queueDownload("./img/Crate.png");
+//AM.queueDownload("./img/Spikes.png");
 AM.queueDownload("./img/bg3.png");
 AM.queueDownload("./img/obstacles.png");
-AM.queueDownload("./img/newOil.png");
-AM.queueDownload("./img/branch.png");
+//AM.queueDownload("./img/newOil.png");
+//AM.queueDownload("./img/branch.png");
 AM.queueDownload("./img/mushroomdude.png");
 
 AM.downloadAll(function () {
@@ -399,5 +441,9 @@ AM.downloadAll(function () {
 //    }
 //    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
     
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "#000000", 390, 10));*/
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
+    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
+    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
     console.log("All Done!");
 });
