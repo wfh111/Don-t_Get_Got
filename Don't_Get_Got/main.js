@@ -118,7 +118,7 @@ function Score(game, score, color, x, y) {
 //Score.prototype = new Entity();
 Score.prototype.constructor = Score;
 Score.prototype.update = function() {
-	this.score += Math.floor(background_speed / 2);
+	this.score += Math.floor(background_speed);
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 	//Entity.prototype.update.call(this);
 };
