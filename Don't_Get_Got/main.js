@@ -109,7 +109,7 @@ function Score(game, score, color, x, y) {
 	this.y = y;
 	this.ctx = game.ctx;
 	this.score = score;
-	this.ctx.font = "10px Arial";
+	this.ctx.font = "15px Arial";
 	this.ctx.fillStyle = color;
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 	Entity.call(this, game, x, y);
@@ -370,7 +370,7 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    gameEngine.addEntity(new Score(gameEngine, gameScore, "#FFFFFF", 325, 10));
+    gameEngine.addEntity(new Score(gameEngine, gameScore, "#FFFFFF", 280, 480));
     gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")));
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
 
