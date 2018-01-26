@@ -7,6 +7,7 @@ var lane_size = 100;
 var left_change = 0;
 var right_change = 0;
 var gameScore = 0;
+var background_speed = 1;
 
 //function Animation(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
 //    this.spriteSheet = spriteSheet;
@@ -130,6 +131,10 @@ Background.prototype.draw = function () {
 };
 
 Background.prototype.update = function () {
+  if (this.speed <= 4) {
+    this.speed *= 1.0001;
+    background_speed = this.speed;
+  }
 };
 
 function Score(game, score, color, x, y) {
@@ -241,6 +246,7 @@ Spike.prototype = new Entity();
 Spike.prototype.constructor = Spike;
 
 Spike.prototype.update = function() {
+	this.speed = 60 * background_speed;
 	this.y += this.game.clockTick * this.speed
 	Entity.prototype.update.call(this);
 };
@@ -268,6 +274,7 @@ Crate.prototype = new Entity();
 Crate.prototype.constructor = Crate;
 
 Crate.prototype.update = function () {
+	this.speed = 60 * background_speed;
 	this.y += this.game.clockTick * this.speed
 	Entity.prototype.update.call(this);
 };
@@ -294,6 +301,7 @@ Oil.prototype = new Entity();
 Oil.prototype.constructor = Oil;
 
 Oil.prototype.update = function () {
+	this.speed = 60 * background_speed;
 	this.y += this.game.clockTick * this.speed
 	Entity.prototype.update.call(this);
 };
@@ -321,6 +329,7 @@ Branch.prototype = new Entity();
 Branch.prototype.constructor = Branch;
 
 Branch.prototype.update = function () {
+	this.speed = 60 * background_speed;
 	this.y += this.game.clockTick * this.speed
 	Entity.prototype.update.call(this);
 };
