@@ -125,7 +125,7 @@ function MushroomDude(game, spritesheet) {
     this.animation = new Animation(spritesheet, 0, 0, 189, 230, 0.10, 14, true);
     this.x = 0;
     this.y = 0;
-    this.speed = 200;
+    this.speed = 3;
     this.game = game;
     this.Right = false;
     this.Left = false;
@@ -145,15 +145,15 @@ MushroomDude.prototype.update = function () {
     if (this.game.rightButton) {
       this.Right = true;
     } else {
-      if (this.x >= right_lane || this.Left) {
+      if (this.x >= right_lane || (Math.floor(this.x) == middle_lane) || this.Left) {
         right_change = 0;
         this.Right = false;
       }
     }
     if (this.Right) {
-      if (this.x < right_lane && right_change < lane_size) {
-        this.x += this.game.clockTick * this.speed;
-        right_change += this.game.clockTick * this.speed;
+      if (this.x < right_lane) {
+        this.x += this.speed;
+        right_change += this.speed;
       } else {
         right_change = 0;
         this.Right = false;
@@ -163,15 +163,15 @@ MushroomDude.prototype.update = function () {
     if (this.game.leftButton) {
       this.Left = true;
     } else {
-      if (this.x <= left_lane || this.Right) {
+      if (this.x <= left_lane || (Math.floor(this.x) == middle_lane) || this.Right) {
         left_change = 0;
         this.Left = false;
       }
     }
     if (this.Left) {
-      if (this.x > left_lane && left_change < lane_size) {
-        this.x -= this.game.clockTick * this.speed;
-        left_change += this.game.clockTick * this.speed;
+      if (this.x > left_lane) {
+        this.x -= this.speed;
+        left_change += this.speed;
       } else {
         left_change = 0;
         this.Left = false;
@@ -361,6 +361,6 @@ AM.downloadAll(function () {
     gameEngine.addEntity(new Score(gameEngine, gameScore, "#FF0000", 325, 10));
     gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")));
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-    
+
     console.log("All Done!");
 });
