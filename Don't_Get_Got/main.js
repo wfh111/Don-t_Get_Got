@@ -377,12 +377,8 @@ Obstacle_Spawner.prototype.draw = function () {
 	}
 };
 
-//AM.queueDownload("./img/Crate.png");
-//AM.queueDownload("./img/Spikes.png");
 AM.queueDownload("./img/bg3.png");
 AM.queueDownload("./img/obstacles.png");
-//AM.queueDownload("./img/newOil.png");
-//AM.queueDownload("./img/branch.png");
 AM.queueDownload("./img/mushroomdude.png");
 
 AM.downloadAll(function () {
@@ -395,55 +391,6 @@ AM.downloadAll(function () {
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
     gameEngine.addEntity(new Score(gameEngine, gameScore, "#FF0000", 325, 10));
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-    var type = Math.floor(Math.random() * 100) + 1;
-    type %= 4;
-//    var type = 0;
-    var lane = Math.floor(Math.random() * 10) + 1;
-    lane %= 3;
-//    var lane = 2;
-    switch(type) {
-    case 0: //Spikes
-    	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), lane));
-    	break;
-    case 1: //Crate
-        gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), lane));
-        break;
-    case 2: //Oil
-    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/newOil.png"), lane));
-    	break;
-    case 3: //Branch
-    	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
-    	break;
-    }
-/*    gameEngine.start();
-    gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));*/
-
-//    var type = Math.floor(Math.random() * 100) + 1;
-//    type %= 4;
-////    var type = 0;
-//    var lane = Math.floor(Math.random() * 10) + 1;
-//    lane %= 3;
-////    var lane = 2;
-//    switch(type) {
-//    case 0: //Spikes
-    	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), 1));
-//    	break;
-//    case 1: //Crate
-        gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), 2));
-//        break;
-//    case 2: //Oil
-    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/newOil.png"), 0));
-//    	break;
-//    case 3: //Branch
-//    	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
-//    	break;
-//    }
-//    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
-    
-    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "#000000", 390, 10));*/
-    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
-    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
+    gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")));
     console.log("All Done!");
 });
