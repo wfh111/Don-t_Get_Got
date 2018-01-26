@@ -304,18 +304,24 @@ function Obstacle_Spawner(game, spritesheet) {
 	this.game = game;
 	this.spritesheet = spritesheet;
 	this.counter = 0;
+	this.previous = -1;
 };
 
 Obstacle_Spawner.prototype = new Entity();
 Obstacle_Spawner.prototype.constructor = Obstacle_Spawner;
 
 Obstacle_Spawner.prototype.update = function () {
-	if(this.counter % Math.floor(250 / background_speed) === 0){
+	if(this.counter % Math.floor(225 / background_speed) === 0){
 		var type = Math.floor(Math.random() * 100) + 1;
 		  type %= 4;
 		//  var type = 0;
 		  var lane = Math.floor(Math.random() * 10) + 1;
 		  lane %= 3;
+		  while(lane === this.previous) {
+			  lane = Math.floor(Math.random() * 10) + 1;
+			  lane %= 3;
+		  }
+		  this.previous = lane;
 		//  var lane = 2;
 		  switch(type) {
 		  case 0: //Spikes
