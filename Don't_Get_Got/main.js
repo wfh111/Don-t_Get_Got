@@ -67,7 +67,7 @@ Animation.prototype.isDone = function () {
 function Background(game, spritesheet) {
     this.x = 0;
     this.y = 0;
-    this.speed = 1;
+    this.speed = 2;
     this.spritesheet = spritesheet;
     this.game = game;
     this.ctx = game.ctx;
@@ -91,9 +91,15 @@ Background.prototype.draw = function () {
 };
 
 Background.prototype.update = function () {
-  if (this.speed <= 4) {
+  if (this.speed <= 5) {
     this.speed *= 1.0001;
     background_speed = this.speed;
+  }
+  if (this.speed >= 3) {
+    // trigger level change
+  }
+  if (this.speed >= 4) {
+    // triger level change
   }
 };
 
@@ -112,7 +118,7 @@ function Score(game, score, color, x, y) {
 //Score.prototype = new Entity();
 Score.prototype.constructor = Score;
 Score.prototype.update = function() {
-	this.score += 1;
+	this.score += Math.floor(background_speed / 2);
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 	//Entity.prototype.update.call(this);
 };
@@ -194,11 +200,11 @@ function Spike (game, spritesheet, lane) {
 	this.speed = 60;
 	this.ctx = game.ctx;
 	if (lane === 0) {
-    	Entity.call(this, game, 85, 0);
+    	Entity.call(this, game, 85, -200);
     } else if (lane === 1) {
-    	Entity.call(this, game, 173, 0);
+    	Entity.call(this, game, 173, -200);
     } else {
-    	Entity.call(this, game, 260, 0);
+    	Entity.call(this, game, 260, -200);
     }
 };
 
@@ -222,11 +228,11 @@ function Crate(game, spritesheet, lane) {
     this.speed = 60;
     this.ctx = game.ctx;
     if (lane === 0) {
-    	Entity.call(this, game, 87, 0);
+    	Entity.call(this, game, 87, -200);
     } else if (lane === 1) {
-    	Entity.call(this, game, 175, 0);
+    	Entity.call(this, game, 175, -200);
     } else {
-    	Entity.call(this, game, 260, 0);
+    	Entity.call(this, game, 260, -200);
     }
 };
 
@@ -249,11 +255,11 @@ function Oil(game, spritesheet, lane) {
     this.speed = 60;
     this.ctx = game.ctx;
     if (lane === 0) {
-    	Entity.call(this, game, 40, 0);
+    	Entity.call(this, game, 40, -200);
     } else if (lane === 1) {
-    	Entity.call(this, game, 128, 0);
+    	Entity.call(this, game, 128, -200);
     } else {
-    	Entity.call(this, game, 215, 0);
+    	Entity.call(this, game, 215, -200);
     }
 };
 
@@ -276,11 +282,11 @@ function Branch(game, spritesheet, lane) {
     this.speed = 60;
     this.ctx = game.ctx;
     if (lane === 0) {
-    	Entity.call(this, game, 70, 0);
+    	Entity.call(this, game, 70, -200);
     } else if (lane === 1) {
-    	Entity.call(this, game, 160, 0);
+    	Entity.call(this, game, 160, -200);
     } else {
-    	Entity.call(this, game, 240, 0);
+    	Entity.call(this, game, 240, -200);
     }
 
 };
