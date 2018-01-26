@@ -149,8 +149,6 @@ Background.prototype.update = function () {
 };
 
 /*function Score(game, score, color, x, y) {
-	this.font1 = font1;
-	this.font2 = font2;
 	this.color = color;
 	this.x = x;
 	this.y = y;
@@ -162,7 +160,7 @@ Score.prototype = new Entity();
 Score.prototype.update = function () {
 	this.gameScore += 1;
 	this.ctx.font = "30px Arial";
-	this.ctx.fillStyle = "Red";
+	this.ctx.fillStyle = "#000000";
 	this.ctx.fillText("SCORE: " + this.score, this.x, this.y);
 };*/
 
@@ -289,7 +287,7 @@ Crate.prototype.draw = function () {
 };
 //0, 1300
 function Oil(game, spritesheet, lane) {
-    this.animation = new Animation(spritesheet, 0, 1450, 776, 484, 810, 1, 1, true);
+    this.animation = new Animation(spritesheet, 0, 1450, 776, 450, 810, 1, 1, true);
     this.speed = 60;
     this.ctx = game.ctx;
     if (lane === 0) {
@@ -404,30 +402,10 @@ AM.downloadAll(function () {
     gameEngine.init(ctx);
     gameEngine.start();
     gameEngine.addEntity(new Background(gameEngine, AM.getAsset("./img/bg3.png")));
+    /*gameEngine.addEntity(new Score(gameEngine, gameScore, "#000000", 390, 10));*/
+    gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
     /*gameEngine.addEntity(new Score(gameEngine, gameScore, "Red", 390, 10));*/
     gameEngine.addEntity(new MushroomDude(gameEngine, AM.getAsset("./img/mushroomdude.png")));
-
-//    var type = Math.floor(Math.random() * 100) + 1;
-//    type %= 4;
-////    var type = 0;
-//    var lane = Math.floor(Math.random() * 10) + 1;
-//    lane %= 3;
-////    var lane = 2;
-//    switch(type) {
-//    case 0: //Spikes
-//    	gameEngine.addEntity(new Spike(gameEngine, AM.getAsset("./img/Spikes.png"), 1));
-//    	break;
-//    case 1: //Crate
-//        gameEngine.addEntity(new Crate(gameEngine, AM.getAsset("./img/Crate.png"), 2));
-//        break;
-//    case 2: //Oil
-//    	gameEngine.addEntity(new Oil(gameEngine, AM.getAsset("./img/newOil.png"), 0));
-//    	break;
-//    case 3: //Branch
-//    	gameEngine.addEntity(new Branch(gameEngine, AM.getAsset("./img/branch.png"), lane));
-//    	break;
-//    }
     gameEngine.addEntity(new Obstacle_Spawner(gameEngine, AM.getAsset("./img/obstacles.png")))
-    
     console.log("All Done!");
 });
